@@ -38,7 +38,7 @@ enum ListError ListCtor (list_t* const list, const size_t number_elem)
     {
         list->data [index_ctor_] = 0;
         list->order [index_ctor_].next = index_ctor_ + 1;
-        list->order [index_ctor_].previous = (size_t) - 1;
+        list->order [index_ctor_].previous = (size_t) -1;
     }
 
     list->data [0] = 0;

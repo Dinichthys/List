@@ -34,7 +34,7 @@ enum ListError ListPopAfterIndex (list_t* const list, list_elem_t* const element
     list->order [next_elem_].previous = previous_elem_;
 
     list->order [index].next = list->free;
-    list->order [index].previous = (size_t) - 1;
+    list->order [index].previous = (size_t) -1;
 
     list->free = index;
 
@@ -71,7 +71,7 @@ enum ListError ListPopFront (list_t* const list, list_elem_t* const element)
     list->order [next_elem_].previous = previous_elem_;
 
     list->order [index_head_].next = list->free;
-    list->order [index_head_].previous = (size_t) - 1;
+    list->order [index_head_].previous = (size_t) -1;
 
     list->free = index_head_;
 
@@ -108,7 +108,7 @@ enum ListError ListPopBack (list_t* const list, list_elem_t* const element)
     list->order [next_elem_].previous = previous_elem_;
 
     list->order [index_tail_].next = list->free;
-    list->order [index_tail_].previous = (size_t) - 1;
+    list->order [index_tail_].previous = (size_t) -1;
 
     list->free = index_tail_;
 

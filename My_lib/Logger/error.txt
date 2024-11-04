@@ -1,61 +1,61 @@
 [DEBUG] 
-Cpp-files/list_construction.cpp:14 (ListCtor) 22 sec 21 min 19 hours 4 days 11 month 2024 year
+Cpp-files/list_construction.cpp:14 (ListCtor) 9 sec 14 min 22 hours 4 days 11 month 2024 year
 Constructor of the list got argument:
-| list = 0x7a423d209050 |
+| list = 0x7e7430809050 |
 
 
 [DEBUG] 
-Cpp-files/list_push.cpp:44 (ListPushFront) 22 sec 21 min 19 hours 4 days 11 month 2024 year
+Cpp-files/list_push.cpp:44 (ListPushFront) 9 sec 14 min 22 hours 4 days 11 month 2024 year
 Push after head of the list got argument:
-| list = 0x7a423d209050 | element = 100 |
+| list = 0x7e7430809050 | element = 100 |
 | Head = 0 | Tail = 0 |
 
 
 [DEBUG] 
-Cpp-files/list_push.cpp:80 (ListPushBack) 22 sec 21 min 19 hours 4 days 11 month 2024 year
+Cpp-files/list_push.cpp:80 (ListPushBack) 9 sec 14 min 22 hours 4 days 11 month 2024 year
 Push before tail of the list got argument:
-| list = 0x7a423d209050 | element = 777 |
+| list = 0x7e7430809050 | element = 777 |
 | Head = 1 | Tail = 1 |
 
 
 [DEBUG] 
-Cpp-files/list_pop.cpp:14 (ListPopAfterIndex) 22 sec 21 min 19 hours 4 days 11 month 2024 year
+Cpp-files/list_pop.cpp:14 (ListPopAfterIndex) 9 sec 14 min 22 hours 4 days 11 month 2024 year
 Pop of index of the list got argument:
-| list = 0x7a423d209050 | element = 0x7a423d209030 | index = 1 |
+| list = 0x7e7430809050 | element = 0x7e7430809030 | index = 1 |
 | Next = 0 | Previous = 2 |
 
 
 [DEBUG] 
-Cpp-files/list_push.cpp:44 (ListPushFront) 22 sec 21 min 19 hours 4 days 11 month 2024 year
+Cpp-files/list_push.cpp:44 (ListPushFront) 9 sec 14 min 22 hours 4 days 11 month 2024 year
 Push after head of the list got argument:
-| list = 0x7a423d209050 | element = 100 |
+| list = 0x7e7430809050 | element = 100 |
 | Head = 2 | Tail = 2 |
 
 
 [DEBUG] 
-Cpp-files/list_push.cpp:44 (ListPushFront) 22 sec 21 min 19 hours 4 days 11 month 2024 year
+Cpp-files/list_push.cpp:44 (ListPushFront) 9 sec 14 min 22 hours 4 days 11 month 2024 year
 Push after head of the list got argument:
-| list = 0x7a423d209050 | element = 100 |
+| list = 0x7e7430809050 | element = 100 |
 | Head = 1 | Tail = 2 |
 
 
 [DEBUG] 
-Cpp-files/list_push.cpp:44 (ListPushFront) 22 sec 21 min 19 hours 4 days 11 month 2024 year
+Cpp-files/list_push.cpp:44 (ListPushFront) 9 sec 14 min 22 hours 4 days 11 month 2024 year
 Push after head of the list got argument:
-| list = 0x7a423d209050 | element = 100 |
+| list = 0x7e7430809050 | element = 100 |
 | Head = 3 | Tail = 2 |
 
 
 [DEBUG] 
-Cpp-files/list_pop.cpp:14 (ListPopAfterIndex) 22 sec 21 min 19 hours 4 days 11 month 2024 year
+Cpp-files/list_pop.cpp:14 (ListPopAfterIndex) 9 sec 14 min 22 hours 4 days 11 month 2024 year
 Pop of index of the list got argument:
-| list = 0x7a423d209050 | element = 0x7a423d209030 | index = 2 |
+| list = 0x7e7430809050 | element = 0x7e7430809030 | index = 2 |
 | Next = 1 | Previous = 0 |
 
 
 [DEBUG] 
-Cpp-files/list_construction.cpp:56 (ListDtor) 22 sec 21 min 19 hours 4 days 11 month 2024 year
+Cpp-files/list_construction.cpp:56 (ListDtor) 9 sec 14 min 22 hours 4 days 11 month 2024 year
 Destructor of the list got argument:
-| list = 0x7a423d209050 |
+| list = 0x7e7430809050 |
 
 

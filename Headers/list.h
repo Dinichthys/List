@@ -32,11 +32,12 @@ enum ListError
     kCantDtorList               = 2,
     kCantPushList               = 3,
     kCantPopList                = 4,
-    kVerifyListNullPtr          = 5,
-    kVerifyListInvalidZeroElem  = 6,
-    kVerifyListInvalidSize      = 7,
-    kVerifyListInvalidOrderList = 8,
-    kVerifyListInvalidOrderFree = 9,
+    kCantDumpList               = 5,
+    kVerifyListNullPtr          = 6,
+    kVerifyListInvalidZeroElem  = 7,
+    kVerifyListInvalidSize      = 8,
+    kVerifyListInvalidOrderList = 9,
+    kVerifyListInvalidOrderFree = 10,
 };
 
 #include "list_construction.h"

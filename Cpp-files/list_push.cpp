@@ -17,7 +17,7 @@ enum ListError ListPushAfterIndex (list_t* const list, const list_elem_t element
                 list, element, index,
                 list->order [index].next, list->order [index].previous);
 
-    if ((list->counter + 1 >= list->size) || (list->order [index].previous == 0))
+    if ((list->counter + 1 >= list->size) || (list->order [index].previous == (size_t) -1))
     {
         return kCantPushList;
     }
@@ -61,7 +61,7 @@ enum ListError ListPushFront (list_t* const list, const list_elem_t element)
 
     list->data  [new_element_index_] = element;
     list->order [new_element_index_].next = 0;
-    list->order [new_element_index_].previous = list->order [0].next;
+    list->order [new_element_index_].previous = list->order [0].previous;
 
     list->order [list->order [0].previous].next = new_element_index_;
     list->order [0].previous = new_element_index_;
@@ -96,7 +96,7 @@ enum ListError ListPushBack (list_t* const list, const list_elem_t element)
     list->free = list->order [list->free].next;
 
     list->data  [new_element_index_] = element;
-    list->order [new_element_index_].next = list->order [0].previous;
+    list->order [new_element_index_].next = list->order [0].next;
     list->order [new_element_index_].previous = 0;
 
     list->order [list->order [0].next].previous = new_element_index_;

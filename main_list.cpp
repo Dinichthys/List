@@ -20,7 +20,7 @@ int main ()
 
     ListError result = kDoneList;
 
-    result = ListCtor (&list, 2000);
+    result = ListCtor (&list, 10);
 
     ERROR_HANDLER (result);
 
@@ -49,6 +49,10 @@ int main ()
     ERROR_HANDLER (result);
 
     result = ListPushFront (&list, 100);
+
+    ERROR_HANDLER (result);
+
+    result = ListDump (&list);
 
     ERROR_HANDLER (result);
 

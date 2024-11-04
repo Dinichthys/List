@@ -16,5 +16,6 @@
 
 const char* EnumToStr (const enum ListError error);
 enum ListError VerifyList (const list_t* const list);
+enum ListError ListDump (const list_t* const list);
 
 #endif // LIST_ERROR_HANDLER_h
