@@ -27,14 +27,14 @@ typedef struct list
 
 enum ListError
 {
-    kDoneList       = 0,
-    kCantCtorList   = 1,
-    kCantDtorList   = 2,
-    kCantPushList   = 3,
-    kCantPopList    = 4,
-    kVerifyListNullPtr = 5,
-    kVerifyListInvalidZeroElem = 6,
-    kVerifyListInvalidSize = 7,
+    kDoneList                   = 0,
+    kCantCtorList               = 1,
+    kCantDtorList               = 2,
+    kCantPushList               = 3,
+    kCantPopList                = 4,
+    kVerifyListNullPtr          = 5,
+    kVerifyListInvalidZeroElem  = 6,
+    kVerifyListInvalidSize      = 7,
     kVerifyListInvalidOrderList = 8,
     kVerifyListInvalidOrderFree = 9,
 };
