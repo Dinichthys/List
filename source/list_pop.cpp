@@ -1,12 +1,12 @@
-#include "../Headers/list_pop.h"
-#include "../Headers/list.h"
+#include "../include/list_pop.h"
+#include "../include/list.h"
 
 #include <stdlib.h>
 
 #include "../My_lib/Assert/my_assert.h"
 #include "../My_lib/Logger/logging.h"
 
-enum ListError ListPopAfterIndex (list_t* const list, list_elem_t* const element, const size_t index)
+enum ListError ListPopAfterIndex (list_t* const list, list_elem_t* const element, size_t index)
 {
     ASSERT (list    != NULL, "Invalid argument list [%p] for pop of index\n", list);
     ASSERT (element != NULL, "Invalid argument element  [%p] for pop of index\n", element);
@@ -33,10 +33,25 @@ enum ListError ListPopAfterIndex (list_t* const list, list_elem_t* const element
     list->order [previous_elem_].next = next_elem_;
     list->order [next_elem_].previous = previous_elem_;
 
+    if (list->counter + 1 > index)
+    {
+        list->data [index] = list->data [list->counter + 1];
+        list->order [index] = list->order [list->counter + 1];
+
+        list->order [list->order [index].previous].next = index;
+        list->order [list->order [index].next].previous = index;
+
+        index = list->counter + 1;
+    }
+
+    list->data [index] = 0;
     list->order [index].next = list->free;
     list->order [index].previous = (size_t) -1;
 
     list->free = index;
+
+
+
 
     return kDoneList;
 }
@@ -53,29 +68,9 @@ enum ListError ListPopFront (list_t* const list, list_elem_t* const element)
                 list, element,
                 list->order [0].previous, list->order [0].next);
 
-    if (list->counter == 0)
-    {
-        return kCantPopList;
-    }
+    enum ListError result = ListPopAfterIndex (list, element, list->order [0].previous);
 
-    list->counter--;
-
-    const size_t index_head_ = list->order [0].previous;
-
-    *element = list->data [index_head_];
-
-    size_t previous_elem_ = list->order [index_head_].previous;
-    size_t next_elem_ = list->order [index_head_].next;
-
-    list->order [previous_elem_].next = next_elem_;
-    list->order [next_elem_].previous = previous_elem_;
-
-    list->order [index_head_].next = list->free;
-    list->order [index_head_].previous = (size_t) -1;
-
-    list->free = index_head_;
-
-    return kDoneList;
+    return result;
 }
 
 enum ListError ListPopBack (list_t* const list, list_elem_t* const element)
@@ -90,27 +85,7 @@ enum ListError ListPopBack (list_t* const list, list_elem_t* const element)
                 list, element,
                 list->order [0].previous, list->order [0].next);
 
-    if (list->counter == 0)
-    {
-        return kCantPopList;
-    }
+    enum ListError result = ListPopAfterIndex (list, element, list->order [0].next);
 
-    list->counter--;
-
-    const size_t index_tail_ = list->order [0].previous;
-
-    *element = list->data [index_tail_];
-
-    size_t previous_elem_ = list->order [index_tail_].previous;
-    size_t next_elem_ = list->order [index_tail_].next;
-
-    list->order [previous_elem_].next = next_elem_;
-    list->order [next_elem_].previous = previous_elem_;
-
-    list->order [index_tail_].next = list->free;
-    list->order [index_tail_].previous = (size_t) -1;
-
-    list->free = index_tail_;
-
-    return kDoneList;
+    return result;
 }

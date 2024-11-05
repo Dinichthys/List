@@ -1,4 +1,4 @@
-#include "Headers/list.h"
+#include "include/list.h"
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -40,19 +40,19 @@ int main ()
 
     fprintf (stderr, "Element = %lu\n", element);
 
-    result = ListPushFront (&list, 100);
-
-    ERROR_HANDLER (result);
-
-    result = ListPushFront (&list, 100);
-
-    ERROR_HANDLER (result);
-
-    result = ListPushFront (&list, 100);
-
-    ERROR_HANDLER (result);
-
     result = ListDump (&list);
+
+    ERROR_HANDLER (result);
+
+    result = ListPushFront (&list, 100);
+
+    ERROR_HANDLER (result);
+
+    result = ListPushFront (&list, 100);
+
+    ERROR_HANDLER (result);
+
+    result = ListPushFront (&list, 100);
 
     ERROR_HANDLER (result);
 

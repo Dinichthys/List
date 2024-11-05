@@ -3,34 +3,34 @@ CXXFLAGS = -D _DEBUG  -ggdb -g3 -D_FORTIFY_SOURCES=3 -std=c++17 -Og -Wall -Wextr
 all: list
 
 list: main_list.o list.o logging.o print_error.o
-	@g++ $(CXXFLAGS) Objects/main_list.o Objects/list_construction.o Objects/list_push.o Objects/list_pop.o Objects/list_index.o Objects/list_error_handler.o Objects/logging.o Objects/print_error.o -o list
+	@g++ $(CXXFLAGS) build/*.o -o list
 
 logging.o: My_lib/Logger/logging.cpp
-	@g++ $(CXXFLAGS) -c My_lib/Logger/logging.cpp -o Objects/logging.o
+	@g++ $(CXXFLAGS) -c My_lib/Logger/logging.cpp -o build/logging.o
 
 print_error.o: My_lib/Assert/print_error.cpp
-	@g++ $(CXXFLAGS) -c My_lib/Assert/print_error.cpp -o Objects/print_error.o
+	@g++ $(CXXFLAGS) -c My_lib/Assert/print_error.cpp -o build/print_error.o
 
 main_list.o: main_list.cpp
-	@g++ $(CXXFLAGS) -c main_list.cpp -o Objects/main_list.o
+	@g++ $(CXXFLAGS) -c main_list.cpp -o build/main_list.o
 
 list.o: list_construction.o list_push.o list_pop.o list_index.o list_error_handler.o
 	@
 
-list_construction.o: Cpp-files/list_construction.cpp
-	@g++ $(CXXFLAGS) -c Cpp-files/list_construction.cpp -o Objects/list_construction.o
+list_construction.o: source/list_construction.cpp
+	@g++ $(CXXFLAGS) -c source/list_construction.cpp -o build/list_construction.o
 
-list_push.o: Cpp-files/list_push.cpp
-	@g++ $(CXXFLAGS) -c Cpp-files/list_push.cpp -o Objects/list_push.o
+list_push.o: source/list_push.cpp
+	@g++ $(CXXFLAGS) -c source/list_push.cpp -o build/list_push.o
 
-list_pop.o: Cpp-files/list_pop.cpp
-	@g++ $(CXXFLAGS) -c Cpp-files/list_pop.cpp -o Objects/list_pop.o
+list_pop.o: source/list_pop.cpp
+	@g++ $(CXXFLAGS) -c source/list_pop.cpp -o build/list_pop.o
 
-list_index.o: Cpp-files/list_index.cpp
-	@g++ $(CXXFLAGS) -c Cpp-files/list_index.cpp -o Objects/list_index.o
+list_index.o: source/list_index.cpp
+	@g++ $(CXXFLAGS) -c source/list_index.cpp -o build/list_index.o
 
-list_error_handler.o: Cpp-files/list_error_handler.cpp
-	@g++ $(CXXFLAGS) -c Cpp-files/list_error_handler.cpp -o Objects/list_error_handler.o
+list_error_handler.o: source/list_error_handler.cpp
+	@g++ $(CXXFLAGS) -c source/list_error_handler.cpp -o build/list_error_handler.o
 
 clean:
-	rm -rf *.o list
+	rm -rf build/*.o list

@@ -1,5 +1,5 @@
-#include "../Headers/list_error_handler.h"
-#include "../Headers/list.h"
+#include "../include/list_error_handler.h"
+#include "../include/list.h"
 
 #include <stdlib.h>
 
@@ -99,57 +99,82 @@ enum ListError ListDump (const list_t* const list)
         return kCantDumpList;
     }
 
-    fprintf (dump_file, "digraph {\n"
-    "fontname=\"Helvetica,Arial,sans-serif\"\n"
-    "node [fontname=\"Helvetica,Arial,sans-serif\"]\n"
-    "graph [\n"
-    "rankdir = \"LR\"\n"
-    "];\n");
+    fprintf (dump_file, "digraph\n{\n"
+    "\tfontname=\"Helvetica,Arial,sans-serif\";\n"
+    "\tnode [fontname=\"Helvetica,Arial,sans-serif\"];\n"
+    "\tgraph [rankdir = \"LR\"];\n"
+	"\tranksep = 1.5;\n");
 
-    fprintf (dump_file, "\"node-1\" [\n"
-                        "label = \""
+//------------------------------------------------------------------------------------------------------------
+
+    fprintf (dump_file, "\n{\n"
+                        "rank=max;\n");
+
+    fprintf (dump_file, "\n\t\"node-1\" [\n"
+                        "\t\tlabel = \""
                         "<f0> free| "
                         "<f1> %lu\"\n"
-                        "shape = \"record\"\n"
-                        "];",
+                        "\t\tshape = \"record\"\n"
+                        "\t];\n",
                         list->free);
 
-    fprintf (dump_file, "\"node0\" [\n"
-                        "label = \""
+    fprintf (dump_file, "\n\t\"node0\" [\n"
+                        "\t\tlabel = \""
                         "<f0> index = 0| "
                         "<f1> | "
                         "<f2> Tail = %lu| "
                         "<f3> Head = %lu\"\n"
-                        "shape = \"record\"\n"
-                        "];",
+                        "\t\tshape = \"record\"\n"
+                        "\t];\n",
                         list->order [0].next, list->order [0].previous);
+
+    fprintf (dump_file, "}\n");
+
+//------------------------------------------------------------------------------------------------------------
+
+    fprintf (dump_file, "\n{\n"
+                        "rank=min;\n");
 
     for (size_t index = 1; index < list->size; index++)
     {
-        fprintf (dump_file, "\"node%lu\" [\n"
-                            "label = \""
+        fprintf (dump_file, "\t\"node%lu\" [\n"
+                            "\t\tlabel = \""
                             "<f0> index = %lu| "
                             "<f1> data = %lu| "
                             "<f2> next = %lu| "
                             "<f3> previous = %lu\"\n"
-                            "shape = \"record\"\n"
-                            "];",
+                            "\t\tshape = \"record\"\n"
+                            "\t];\n",
                             index,
                             index,
                             list->data [index],
                             list->order [index].next, list->order [index].previous);
     }
 
+    fprintf (dump_file, "}\n");
+
+//------------------------------------------------------------------------------------------------------------
+
+    for (size_t index = 0; index < list->size - 1; index++)
+    {
+        fprintf (dump_file, "\t\"node%lu\":f0 -> \"node%lu\":f0 "
+                            "[color=\"white\"];\n\n", index, index + 1);
+    }
+
+    fprintf (dump_file, "\n");
+
     for (size_t index = 0; index < list->size; index++)
     {
-        fprintf (dump_file, "\"node%lu\":f2 -> \"node%lu\":f0\n", index, list->order [index].next);
+        fprintf (dump_file, "\t\"node%lu\":f2 -> \"node%lu\":f0 "
+                            "[color=\"black\"];\n\n", index, list->order [index].next);
         if (list->order [index].previous != (size_t) -1)
         {
-            fprintf (dump_file, "\"node%lu\":f3 -> \"node%lu\":f0\n", index, list->order [index].previous);
+            fprintf (dump_file, "\t\"node%lu\":f3 -> \"node%lu\":f0 "
+                                "[color=\"black\"];\n\n", index, list->order [index].previous);
         }
     }
 
-    fprintf (dump_file, "\"node-1\":f1 -> \"node%lu\":f0\n", list->free);
+    fprintf (dump_file, "\n\t\"node-1\":f1 -> \"node%lu\":f0 [color=\"green\"];\n", list->free);
 
     fprintf (dump_file, "}");
 

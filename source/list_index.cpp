@@ -1,5 +1,5 @@
-#include "../Headers/list_index.h"
-#include "../Headers/list.h"
+#include "../include/list_index.h"
+#include "../include/list.h"
 
 #include <stdlib.h>
 

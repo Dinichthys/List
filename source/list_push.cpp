@@ -1,5 +1,5 @@
-#include "../Headers/list_push.h"
-#include "../Headers/list.h"
+#include "../include/list_push.h"
+#include "../include/list.h"
 
 #include <stdlib.h>
 
@@ -33,6 +33,8 @@ enum ListError ListPushAfterIndex (list_t* const list, const list_elem_t element
     list->order [new_element_index_].previous = index;
 
     list->order [index].next = new_element_index_;
+    list->order [list->order [new_element_index_].next].previous = new_element_index_;
+
 
     return kDoneList;
 }
@@ -48,29 +50,9 @@ enum ListError ListPushFront (list_t* const list, const list_elem_t element)
                 list, element,
                 list->order [0].previous, list->order [0].next);
 
-    if (list->counter + 1 >= list->size)
-    {
-        return kCantPushList;
-    }
+    enum ListError result = ListPushAfterIndex (list, element, list->order [0].previous);
 
-    list->counter++;
-
-    size_t new_element_index_ = list->free;
-
-    list->free = list->order [list->free].next;
-
-    list->data  [new_element_index_] = element;
-    list->order [new_element_index_].next = 0;
-    list->order [new_element_index_].previous = list->order [0].previous;
-
-    list->order [list->order [0].previous].next = new_element_index_;
-    list->order [0].previous = new_element_index_;
-    if (list->counter == 1)
-    {
-        list->order [0].next = new_element_index_;
-    }
-
-    return kDoneList;
+    return result;
 }
 
 enum ListError ListPushBack (list_t* const list, const list_elem_t element)
@@ -84,28 +66,8 @@ enum ListError ListPushBack (list_t* const list, const list_elem_t element)
                 list, element,
                 list->order [0].previous, list->order [0].next);
 
-    if (list->counter + 1 >= list->size)
-    {
-        return kCantPushList;
-    }
+    enum ListError result = ListPushAfterIndex (list, element, 0);
 
-    list->counter++;
-
-    size_t new_element_index_ = list->free;
-
-    list->free = list->order [list->free].next;
-
-    list->data  [new_element_index_] = element;
-    list->order [new_element_index_].next = list->order [0].next;
-    list->order [new_element_index_].previous = 0;
-
-    list->order [list->order [0].next].previous = new_element_index_;
-    list->order [0].next = new_element_index_;
-    if (list->counter == 1)
-    {
-        list->order [0].previous = new_element_index_;
-    }
-
-    return kDoneList;
+    return result;
 }
 

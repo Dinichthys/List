@@ -23,6 +23,8 @@ typedef struct list
     size_t size;
 
     size_t free;
+
+    size_t elem_size;
 } list_t;
 
 enum ListError

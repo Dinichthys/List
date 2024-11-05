@@ -1,5 +1,5 @@
-#include "../Headers/list_construction.h"
-#include "../Headers/list.h"
+#include "../include/list_construction.h"
+#include "../include/list.h"
 
 #include <stdlib.h>
 
@@ -44,7 +44,7 @@ enum ListError ListCtor (list_t* const list, const size_t number_elem)
     list->data [0] = 0;
     list->order [0].next = 0;
     list->order [0].previous = 0;
-    list->order [number_elem - 1].next = 0;
+    list->order [number_elem - 1].next = number_elem - 1;
 
     return kDoneList;
 }
