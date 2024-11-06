@@ -2,13 +2,15 @@
 #include "../include/list.h"
 
 #include <stdlib.h>
+#include <string.h>
 
 #include "../My_lib/Assert/my_assert.h"
 #include "../My_lib/Logger/logging.h"
 
-enum ListError ListPushAfterIndex (list_t* const list, const list_elem_t element, const size_t index)
+enum ListError ListPushAfterIndex (list_t* const list, void* const element, const size_t index)
 {
-    ASSERT (list != NULL, "Invalid argument for list [%p] for push after index\n", list);
+    ASSERT (list    != NULL, "Invalid argument for list [%p] for push after index\n", list);
+    ASSERT (element != NULL, "Invalid argument for element [%p] for push after index\n", element);
 
     LOG (DEBUG,
                 "Push after index of the list got argument:\n"
@@ -28,7 +30,7 @@ enum ListError ListPushAfterIndex (list_t* const list, const list_elem_t element
 
     list->free = list->order [list->free].next;
 
-    list->data  [new_element_index_] = element;
+    memcpy ((char*) list->data  + new_element_index_ * list->elem_size, element, list->elem_size);
     list->order [new_element_index_].next = list->order [index].next;
     list->order [new_element_index_].previous = index;
 
@@ -39,7 +41,7 @@ enum ListError ListPushAfterIndex (list_t* const list, const list_elem_t element
     return kDoneList;
 }
 
-enum ListError ListPushFront (list_t* const list, const list_elem_t element)
+enum ListError ListPushFront (list_t* const list, void* const element)
 {
     ASSERT (list != NULL, "Invalid argument for list [%p] for push after head\n", list);
 
@@ -55,7 +57,7 @@ enum ListError ListPushFront (list_t* const list, const list_elem_t element)
     return result;
 }
 
-enum ListError ListPushBack (list_t* const list, const list_elem_t element)
+enum ListError ListPushBack (list_t* const list, void* const element)
 {
     ASSERT (list != NULL, "Invalid argument for list [%p] for push before tail\n", list);
 

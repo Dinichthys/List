@@ -1,5 +1,5 @@
-#ifndef LIST_H
-#define LIST_H
+#ifndef LIST_H_
+#define LIST_H_
 
 #include <stdlib.h>
 
@@ -14,7 +14,7 @@ typedef struct order_list
 
 typedef struct list
 {
-    list_elem_t* data;
+    void* data;
 
     order_list_t* order;
 
@@ -48,4 +48,4 @@ enum ListError
 #include "list_index.h"
 #include "list_error_handler.h"
 
-#endif // LIST_H
+#endif // LIST_H_

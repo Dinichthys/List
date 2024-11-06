@@ -7,7 +7,7 @@
 
 #include "../My_lib/helpful.h"
 
-enum ListError ListCtor (list_t* const list, const size_t number_elem);
+enum ListError ListCtor (list_t* const list, const size_t number_elem, const size_t elem_size);
 enum ListError ListDtor (list_t* const list);
 
 #endif // LIST_CONSTRUCTION_H

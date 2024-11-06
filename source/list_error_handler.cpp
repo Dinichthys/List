@@ -2,6 +2,7 @@
 #include "../include/list.h"
 
 #include <stdlib.h>
+#include <string.h>
 
 #include "../My_lib/Assert/my_assert.h"
 #include "../My_lib/Logger/logging.h"
@@ -49,7 +50,9 @@ enum ListError VerifyList (const list_t* const list)
         return kVerifyListNullPtr;
     }
 
-    if ((list->data [0] != 0)
+    size_t zero = 0;
+
+    if ((memcmp (list->data, &zero, list->elem_size) != 0)
         || ((list->order [0].next == 0) && (list->order [0].previous != 0))
         || ((list->order [0].next != 0) && (list->order [0].previous == 0))
         || ((list->order [0].next == 0) && (list->order [0].previous == 0) && (list->counter != 0)))
@@ -91,7 +94,8 @@ enum ListError VerifyList (const list_t* const list)
     return kDoneList;
 }
 
-enum ListError ListDump (const list_t* const list)
+enum ListError ListDump (const list_t* const list,
+                         void print_data_elem (void* const data, const size_t elem_size, FILE* const stream))
 {
     FILE* dump_file = fopen ("Dump_file.dot", "w");
     if (dump_file == NULL)
@@ -106,9 +110,6 @@ enum ListError ListDump (const list_t* const list)
 	"\tranksep = 1.5;\n");
 
 //------------------------------------------------------------------------------------------------------------
-
-    fprintf (dump_file, "\n{\n"
-                        "rank=max;\n");
 
     fprintf (dump_file, "\n\t\"node-1\" [\n"
                         "\t\tlabel = \""
@@ -125,40 +126,34 @@ enum ListError ListDump (const list_t* const list)
                         "<f2> Tail = %lu| "
                         "<f3> Head = %lu\"\n"
                         "\t\tshape = \"record\"\n"
-                        "\t];\n",
+                        "\t];\n\n",
                         list->order [0].next, list->order [0].previous);
 
-    fprintf (dump_file, "}\n");
-
 //------------------------------------------------------------------------------------------------------------
-
-    fprintf (dump_file, "\n{\n"
-                        "rank=min;\n");
 
     for (size_t index = 1; index < list->size; index++)
     {
         fprintf (dump_file, "\t\"node%lu\" [\n"
                             "\t\tlabel = \""
                             "<f0> index = %lu| "
-                            "<f1> data = %lu| "
-                            "<f2> next = %lu| "
+                            "<f1> data = ",
+                            index, index);
+
+        print_data_elem ((char*) list->data + index * list->elem_size, list->elem_size, dump_file);
+
+        fprintf (dump_file, "| <f2> next = %lu| "
                             "<f3> previous = %lu\"\n"
                             "\t\tshape = \"record\"\n"
-                            "\t];\n",
-                            index,
-                            index,
-                            list->data [index],
+                            "\t];\n\n",
                             list->order [index].next, list->order [index].previous);
     }
-
-    fprintf (dump_file, "}\n");
 
 //------------------------------------------------------------------------------------------------------------
 
     for (size_t index = 0; index < list->size - 1; index++)
     {
         fprintf (dump_file, "\t\"node%lu\":f0 -> \"node%lu\":f0 "
-                            "[color=\"white\"];\n\n", index, index + 1);
+                            "[color = \"white\" weight = %lu];\n\n", index, index + 1, kWeightInvisEdge);
     }
 
     fprintf (dump_file, "\n");
@@ -166,15 +161,21 @@ enum ListError ListDump (const list_t* const list)
     for (size_t index = 0; index < list->size; index++)
     {
         fprintf (dump_file, "\t\"node%lu\":f2 -> \"node%lu\":f0 "
-                            "[color=\"black\"];\n\n", index, list->order [index].next);
+                            "[color = \"black\" weight = %lu];\n\n",
+                            index, list->order [index].next,
+                            kWeightDefaultEdge);
+
         if (list->order [index].previous != (size_t) -1)
         {
             fprintf (dump_file, "\t\"node%lu\":f3 -> \"node%lu\":f0 "
-                                "[color=\"black\"];\n\n", index, list->order [index].previous);
+                                "[color = \"black\" weight = %lu];\n\n",
+                                index, list->order [index].previous,
+                                kWeightDefaultEdge);
         }
     }
 
-    fprintf (dump_file, "\n\t\"node-1\":f1 -> \"node%lu\":f0 [color=\"green\"];\n", list->free);
+    fprintf (dump_file, "\n\t\"node-1\":f1 -> \"node%lu\":f0 [color = \"green\" weight = %lu];\n",
+                        list->free, kWeightFreeEdge);
 
     fprintf (dump_file, "}");
 

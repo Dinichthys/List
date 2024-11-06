@@ -2,11 +2,12 @@
 #include "../include/list.h"
 
 #include <stdlib.h>
+#include <string.h>
 
 #include "../My_lib/Assert/my_assert.h"
 #include "../My_lib/Logger/logging.h"
 
-enum ListError ListPopAfterIndex (list_t* const list, list_elem_t* const element, size_t index)
+enum ListError ListPopAfterIndex (list_t* const list, void* const element, size_t index)
 {
     ASSERT (list    != NULL, "Invalid argument list [%p] for pop of index\n", list);
     ASSERT (element != NULL, "Invalid argument element  [%p] for pop of index\n", element);
@@ -25,7 +26,7 @@ enum ListError ListPopAfterIndex (list_t* const list, list_elem_t* const element
 
     list->counter--;
 
-    *element = list->data [index];
+    memcpy (element, (char*) list->data + index * list->elem_size, list->elem_size);
 
     size_t previous_elem_ = list->order [index].previous;
     size_t next_elem_ = list->order [index].next;
@@ -35,7 +36,10 @@ enum ListError ListPopAfterIndex (list_t* const list, list_elem_t* const element
 
     if (list->counter + 1 > index)
     {
-        list->data [index] = list->data [list->counter + 1];
+        memcpy ((char*) list->data + index * list->elem_size,
+                (char*) list->data + (list->counter + 1) * list->elem_size,
+                list->elem_size);
+
         list->order [index] = list->order [list->counter + 1];
 
         list->order [list->order [index].previous].next = index;
@@ -44,7 +48,7 @@ enum ListError ListPopAfterIndex (list_t* const list, list_elem_t* const element
         index = list->counter + 1;
     }
 
-    list->data [index] = 0;
+    memset ((char*) list->data + index * list->elem_size, 0, list->elem_size);
     list->order [index].next = list->free;
     list->order [index].previous = (size_t) -1;
 
@@ -56,7 +60,7 @@ enum ListError ListPopAfterIndex (list_t* const list, list_elem_t* const element
     return kDoneList;
 }
 
-enum ListError ListPopFront (list_t* const list, list_elem_t* const element)
+enum ListError ListPopFront (list_t* const list, void* const element)
 {
     ASSERT (list    != NULL, "Invalid argument list [%p] for pop front\n", list);
     ASSERT (element != NULL, "Invalid argument element  [%p] for pop front\n", element);
@@ -73,7 +77,7 @@ enum ListError ListPopFront (list_t* const list, list_elem_t* const element)
     return result;
 }
 
-enum ListError ListPopBack (list_t* const list, list_elem_t* const element)
+enum ListError ListPopBack (list_t* const list, void* const element)
 {
     ASSERT (list    != NULL, "Invalid argument list [%p] for pop back\n", list);
     ASSERT (element != NULL, "Invalid argument element  [%p] for pop back\n", element);
