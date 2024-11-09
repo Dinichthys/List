@@ -19,7 +19,8 @@ enum ListError ListPushAfterIndex (list_t* const list, void* const element, cons
                 list, element, index,
                 list->order [index].next, list->order [index].previous);
 
-    if ((list->counter + 1 >= list->size) || (list->order [index].previous == (size_t) -1))
+    if ((list->counter + 1 >= list->size) || (list->order [index].previous == (size_t) -1)
+        || (list->free == list->order [list->free].next))
     {
         return kCantPushList;
     }

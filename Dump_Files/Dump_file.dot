@@ -1,0 +1,125 @@
+digraph
+{
+	fontname = "Helvetica,Arial,sans-serif";
+	node [fontname = "Helvetica,Arial,sans-serif"];
+	graph [rankdir = "LR"];
+	ranksep = 1.5;
+
+	"node-1"
+	[
+		label = "<f0> free| <f1> 5"
+		shape = "record"
+	];
+
+	"node0"
+	[
+		label = "<f0> index = 0| <f1> | <f2> Tail = 1| <f3> Head = 4"
+		shape = "record"
+	];
+
+	"node1"
+	[
+		label = "<f0> index = 1| <f1> data = 777| <f2> next = 2| <f3> previous = 0"
+		shape = "record"
+	];
+
+	"node2"
+	[
+		label = "<f0> index = 2| <f1> data = 100| <f2> next = 3| <f3> previous = 1"
+		shape = "record"
+	];
+
+	"node3"
+	[
+		label = "<f0> index = 3| <f1> data = 100| <f2> next = 4| <f3> previous = 2"
+		shape = "record"
+	];
+
+	"node4"
+	[
+		label = "<f0> index = 4| <f1> data = 100| <f2> next = 0| <f3> previous = 3"
+		shape = "record"
+	];
+
+	"node5"
+	[
+		label = "<f0> index = 5| <f1> data = 0| <f2> next = 6| <f3> previous = 18446744073709551615"
+		shape = "record"
+	];
+
+	"node6"
+	[
+		label = "<f0> index = 6| <f1> data = 0| <f2> next = 7| <f3> previous = 18446744073709551615"
+		shape = "record"
+	];
+
+	"node7"
+	[
+		label = "<f0> index = 7| <f1> data = 0| <f2> next = 8| <f3> previous = 18446744073709551615"
+		shape = "record"
+	];
+
+	"node8"
+	[
+		label = "<f0> index = 8| <f1> data = 0| <f2> next = 9| <f3> previous = 18446744073709551615"
+		shape = "record"
+	];
+
+	"node9"
+	[
+		label = "<f0> index = 9| <f1> data = 0| <f2> next = 9| <f3> previous = 18446744073709551615"
+		shape = "record"
+	];
+
+	"node0":f0 -> "node1":f0 [color = "white" weight = 100];
+
+	"node1":f0 -> "node2":f0 [color = "white" weight = 100];
+
+	"node2":f0 -> "node3":f0 [color = "white" weight = 100];
+
+	"node3":f0 -> "node4":f0 [color = "white" weight = 100];
+
+	"node4":f0 -> "node5":f0 [color = "white" weight = 100];
+
+	"node5":f0 -> "node6":f0 [color = "white" weight = 100];
+
+	"node6":f0 -> "node7":f0 [color = "white" weight = 100];
+
+	"node7":f0 -> "node8":f0 [color = "white" weight = 100];
+
+	"node8":f0 -> "node9":f0 [color = "white" weight = 100];
+
+
+	"node0":f2 -> "node1":f0 [color = "black" weight = 10];
+
+	"node0":f3 -> "node4":f0 [color = "black" weight = 10];
+
+	"node1":f2 -> "node2":f0 [color = "black" weight = 10];
+
+	"node1":f3 -> "node0":f0 [color = "black" weight = 10];
+
+	"node2":f2 -> "node3":f0 [color = "black" weight = 10];
+
+	"node2":f3 -> "node1":f0 [color = "black" weight = 10];
+
+	"node3":f2 -> "node4":f0 [color = "black" weight = 10];
+
+	"node3":f3 -> "node2":f0 [color = "black" weight = 10];
+
+	"node4":f2 -> "node0":f0 [color = "black" weight = 10];
+
+	"node4":f3 -> "node3":f0 [color = "black" weight = 10];
+
+	"node5":f2 -> "node6":f0 [color = "black" weight = 10];
+
+	"node6":f2 -> "node7":f0 [color = "black" weight = 10];
+
+	"node7":f2 -> "node8":f0 [color = "black" weight = 10];
+
+	"node8":f2 -> "node9":f0 [color = "black" weight = 10];
+
+	"node9":f2 -> "node9":f0 [color = "black" weight = 10];
+
+
+	"node-1":f1 -> "node5":f0 [color = "green" weight = 10];
+}

@@ -1,0 +1,9 @@
+build/
+
+main_list.cpp
+
+My_lib/Logger/error.txt
+
+Dump_files/*
+
+list

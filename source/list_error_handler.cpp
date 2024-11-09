@@ -3,6 +3,7 @@
 
 #include <stdlib.h>
 #include <string.h>
+#include <time.h>
 
 #include "../My_lib/Assert/my_assert.h"
 #include "../My_lib/Logger/logging.h"
@@ -97,21 +98,35 @@ enum ListError VerifyList (const list_t* const list)
 enum ListError ListDump (const list_t* const list,
                          void print_data_elem (void* const data, const size_t elem_size, FILE* const stream))
 {
-    FILE* dump_file = fopen ("Dump_file.dot", "w");
+    static size_t counter_dump = 0;
+
+    FILE* dump_file = fopen ("Dump_Files/Dump_file.dot", "w");
     if (dump_file == NULL)
     {
         return kCantDumpList;
     }
 
+    FILE* html_dump_file = fopen ("Dump_Files/Dump.html", "a");
+    if (html_dump_file == NULL)
+    {
+        CLOSE_AND_NULL (dump_file);
+        return kCantDumpList;
+    }
+
+    if (ftell (html_dump_file) == 0)
+    {
+        fprintf (html_dump_file, "<pre>\n<HR>\n");
+    }
+
     fprintf (dump_file, "digraph\n{\n"
-    "\tfontname=\"Helvetica,Arial,sans-serif\";\n"
-    "\tnode [fontname=\"Helvetica,Arial,sans-serif\"];\n"
+    "\tfontname = \"Helvetica,Arial,sans-serif\";\n"
+    "\tnode [fontname = \"Helvetica,Arial,sans-serif\"];\n"
     "\tgraph [rankdir = \"LR\"];\n"
 	"\tranksep = 1.5;\n");
 
 //------------------------------------------------------------------------------------------------------------
 
-    fprintf (dump_file, "\n\t\"node-1\" [\n"
+    fprintf (dump_file, "\n\t\"node-1\"\n\t[\n"
                         "\t\tlabel = \""
                         "<f0> free| "
                         "<f1> %lu\"\n"
@@ -119,7 +134,7 @@ enum ListError ListDump (const list_t* const list,
                         "\t];\n",
                         list->free);
 
-    fprintf (dump_file, "\n\t\"node0\" [\n"
+    fprintf (dump_file, "\n\t\"node0\"\n\t[\n"
                         "\t\tlabel = \""
                         "<f0> index = 0| "
                         "<f1> | "
@@ -133,7 +148,7 @@ enum ListError ListDump (const list_t* const list,
 
     for (size_t index = 1; index < list->size; index++)
     {
-        fprintf (dump_file, "\t\"node%lu\" [\n"
+        fprintf (dump_file, "\t\"node%lu\"\n\t[\n"
                             "\t\tlabel = \""
                             "<f0> index = %lu| "
                             "<f1> data = ",
@@ -180,6 +195,22 @@ enum ListError ListDump (const list_t* const list,
     fprintf (dump_file, "}");
 
     CLOSE_AND_NULL (dump_file);
+
+    char command [100] = "";
+
+    sprintf (command, "dot -Tsvg Dump_Files/Dump_file.dot -o Dump_Files/Dump_file_%lu_.svg\n", counter_dump);
+
+    if (system (command) == -1)
+    {
+        CLOSE_AND_NULL (html_dump_file);
+        return kCantDumpList;
+    }
+
+    fprintf (html_dump_file, "<img src = \"Dump_file_%lu_.svg\" width = 2450>\n<HR>\n", counter_dump);
+
+    counter_dump++;
+
+    CLOSE_AND_NULL (html_dump_file);
 
     return kDoneList;
 }

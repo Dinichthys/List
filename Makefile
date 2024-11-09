@@ -2,7 +2,7 @@ CXXFLAGS = -D _DEBUG  -ggdb -g3 -D_FORTIFY_SOURCES=3 -std=c++17 -Og -Wall -Wextr
 
 all: list
 
-list: main_list.o list.o logging.o print_error.o
+list: clean_html main_list.o list.o logging.o print_error.o
 	@g++ $(CXXFLAGS) build/*.o -o list
 
 logging.o: My_lib/Logger/logging.cpp
@@ -31,6 +31,9 @@ list_index.o: source/list_index.cpp
 
 list_error_handler.o: source/list_error_handler.cpp
 	@g++ $(CXXFLAGS) -c source/list_error_handler.cpp -o build/list_error_handler.o
+
+clean_html:
+	rm -rf Dump_Files/*
 
 clean:
 	rm -rf build/*.o list
