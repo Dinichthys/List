@@ -23,6 +23,6 @@ static const size_t kWeightFreeEdge    = 10;
 const char* EnumToStr (const enum ListError error);
 enum ListError VerifyList (const list_t* const list);
 enum ListError ListDump (const list_t* const list,
-                         void print_data_elem (void* const data, const size_t elem_size, FILE* const stream));
+                         void print_data_elem (void* const data, FILE* const stream));
 
 #endif // LIST_ERROR_HANDLER_h

@@ -96,7 +96,7 @@ enum ListError VerifyList (const list_t* const list)
 }
 
 enum ListError ListDump (const list_t* const list,
-                         void print_data_elem (void* const data, const size_t elem_size, FILE* const stream))
+                         void print_data_elem (void* const data, FILE* const stream))
 {
     static size_t counter_dump = 0;
 
@@ -154,7 +154,7 @@ enum ListError ListDump (const list_t* const list,
                             "<f1> data = ",
                             index, index);
 
-        print_data_elem ((char*) list->data + index * list->elem_size, list->elem_size, dump_file);
+        print_data_elem ((char*) list->data + index * list->elem_size, dump_file);
 
         fprintf (dump_file, "| <f2> next = %lu| "
                             "<f3> previous = %lu\"\n"
