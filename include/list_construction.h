@@ -5,9 +5,12 @@
 
 #include <stdlib.h>
 
-#include "../My_lib/helpful.h"
+#include "My_lib/helpful.h"
 
-enum ListError ListCtor (list_t* const list, const size_t number_elem, const size_t elem_size);
-enum ListError ListDtor (list_t* const list);
+static const size_t kScaleList = 2;
+
+enum ListError ListCtor   (list_t* const list, const size_t number_elem, const size_t elem_size);
+enum ListError ListDtor   (list_t* const list);
+enum ListError ListResize (list_t* const list, const bool flag_more);
 
 #endif // LIST_CONSTRUCTION_H

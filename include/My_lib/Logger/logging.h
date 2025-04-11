@@ -4,19 +4,23 @@
 #include <stdio.h>
 #include <time.h>
 
+#ifndef NDEBUG
 #define LOG(level, ...)                                                                                  \
     do                                                                                                   \
     {                                                                                                    \
         time_t seconds = time (NULL);                                                                    \
         Log ({__FILE__, __func__, __LINE__, localtime(&seconds)}, level, __VA_ARGS__);                   \
     } while (0)
+#else
+#define LOG(...)
+#endif
 
-enum LEVEL_LOG
+enum LevelLog
 {
-    DEBUG   = 1,
-    INFO    = 2,
-    WARNING = 3,
-    ERROR   = 4,
+    kDebug   = 1,
+    kInfo    = 2,
+    kWarning = 3,
+    kError   = 4,
 };
 
 struct logging
@@ -30,8 +34,8 @@ struct logging
     struct tm *now;
 };
 
-void set_log_lvl (const enum LEVEL_LOG level);
+void set_log_lvl (const enum LevelLog level);
 void set_log_file (FILE* const file);
-void Log (const struct logging parameter, const enum LEVEL_LOG level, const char * const format, ...);
+void Log (const struct logging parameter, const enum LevelLog level, const char * const format, ...);
 
 #endif // LOGGING_H

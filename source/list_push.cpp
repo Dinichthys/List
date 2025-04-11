@@ -4,25 +4,33 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "../My_lib/Assert/my_assert.h"
-#include "../My_lib/Logger/logging.h"
+#include "My_lib/Assert/my_assert.h"
+#include "My_lib/Logger/logging.h"
 
-enum ListError ListPushAfterIndex (list_t* const list, void* const element, const size_t index)
+enum ListError ListPushAfterIndex (list_t* const list, const void* const element, const size_t index)
 {
     ASSERT (list    != NULL, "Invalid argument for list [%p] for push after index\n", list);
     ASSERT (element != NULL, "Invalid argument for element [%p] for push after index\n", element);
 
-    LOG (DEBUG,
+    LOG (kDebug,
                 "Push after index of the list got argument:\n"
                 "| list = %p | element = %p | index = %lu |\n"
                 "| Next = %lu | Previous = %lu |\n",
                 list, element, index,
                 list->order [index].next, list->order [index].previous);
 
-    if ((list->counter + 1 >= list->size) || (list->order [index].previous == (size_t) -1)
-        || (list->free == list->order [list->free].next))
+    if ((list->counter + 1 > list->size) || (list->order [index].previous == (size_t) -1))
     {
         return kCantPushList;
+    }
+
+    if ((list->counter > list->size * 3 / 4) || (list->free == list->order [list->free].next))
+    {
+        enum ListError error = ListResize (list, true);
+        if (error != kDoneList)
+        {
+            return error;
+        }
     }
 
     list->counter++;
@@ -42,11 +50,11 @@ enum ListError ListPushAfterIndex (list_t* const list, void* const element, cons
     return kDoneList;
 }
 
-enum ListError ListPushFront (list_t* const list, void* const element)
+enum ListError ListPushFront (list_t* const list, const void* const element)
 {
     ASSERT (list != NULL, "Invalid argument for list [%p] for push after head\n", list);
 
-    LOG (DEBUG,
+    LOG (kDebug,
                 "Push after head of the list got argument:\n"
                 "| list = %p | element = %lu |\n"
                 "| Head = %lu | Tail = %lu |\n",
@@ -58,11 +66,11 @@ enum ListError ListPushFront (list_t* const list, void* const element)
     return result;
 }
 
-enum ListError ListPushBack (list_t* const list, void* const element)
+enum ListError ListPushBack (list_t* const list, const void* const element)
 {
     ASSERT (list != NULL, "Invalid argument for list [%p] for push before tail\n", list);
 
-    LOG (DEBUG,
+    LOG (kDebug,
                 "Push before tail of the list got argument:\n"
                 "| list = %p | element = %lu |\n"
                 "| Head = %lu | Tail = %lu |\n",

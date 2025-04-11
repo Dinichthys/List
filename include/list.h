@@ -3,8 +3,6 @@
 
 #include <stdlib.h>
 
-typedef size_t list_elem_t;
-
 typedef struct order_list
 {
     size_t next;
@@ -30,22 +28,27 @@ typedef struct list
 enum ListError
 {
     kDoneList                   = 0,
+
     kCantCtorList               = 1,
     kCantDtorList               = 2,
-    kCantPushList               = 3,
-    kCantPopList                = 4,
-    kCantDumpList               = 5,
-    kVerifyListNullPtr          = 6,
-    kVerifyListInvalidZeroElem  = 7,
-    kVerifyListInvalidSize      = 8,
-    kVerifyListInvalidOrderList = 9,
-    kVerifyListInvalidOrderFree = 10,
+    kCantResizeList             = 3,
+
+    kCantPushList               = 4,
+    kCantPopList                = 5,
+
+    kCantDumpList               = 6,
+
+    kVerifyListNullPtr          = 7,
+    kVerifyListInvalidZeroElem  = 8,
+    kVerifyListInvalidSize      = 9,
+    kVerifyListInvalidOrderList = 10,
+    kVerifyListInvalidOrderFree = 11,
 };
 
 #include "list_construction.h"
 #include "list_push.h"
 #include "list_pop.h"
-#include "list_index.h"
+#include "list_src.h"
 #include "list_error_handler.h"
 
 #endif // LIST_H_

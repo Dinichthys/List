@@ -7,33 +7,33 @@
 #include "logging.h"
 #include "../Assert/my_assert.h"
 
-static enum LEVEL_LOG logging_lvl  = DEBUG;
+static enum LevelLog logging_lvl   = kWarning;
 static FILE* logging_stream        = stderr;
 static const int year_shift        = 1900;
 static const int month_shift       = 1;
 
-static void level_to_str (const enum LEVEL_LOG level);
+static void level_to_str (const enum LevelLog level);
 
-static void level_to_str (const enum LEVEL_LOG level)
+static void level_to_str (const enum LevelLog level)
 {
     switch (level)
     {
-        case DEBUG:
+        case kDebug:
         {
             fprintf (logging_stream, "[%s] \n", "DEBUG");
             break;
         }
-        case INFO:
+        case kInfo:
         {
             fprintf (logging_stream, "[%s] \n", "INFO");
             break;
         }
-        case WARNING:
+        case kWarning:
         {
             fprintf (logging_stream, "[%s] \n", "WARNING");
             break;
         }
-        case ERROR:
+        case kError:
         {
             fprintf (logging_stream, "[%s] \n", "ERROR");
             break;
@@ -47,7 +47,7 @@ static void level_to_str (const enum LEVEL_LOG level)
 }
 
 
-void Log (const struct logging settings, const enum LEVEL_LOG level, const char * const format, ...)
+void Log (const struct logging settings, const enum LevelLog level, const char * const format, ...)
 {
     ASSERT(format != NULL, "Invalid argument for Log %p\n", format);
 
@@ -71,7 +71,7 @@ void Log (const struct logging settings, const enum LEVEL_LOG level, const char 
     fprintf (logging_stream, "\n\n");
 }
 
-void set_log_lvl (const enum LEVEL_LOG level)
+void set_log_lvl (const enum LevelLog level)
 {
     logging_lvl = level;
 }
@@ -81,5 +81,6 @@ void set_log_file (FILE* const file)
     if (file != NULL)
     {
         logging_stream = file;
+        setbuf (file, NULL);
     }
 }

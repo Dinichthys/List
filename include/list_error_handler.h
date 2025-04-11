@@ -5,9 +5,13 @@
 
 #include "list.h"
 
-static const size_t kWeightInvisEdge   = 100;
-static const size_t kWeightDefaultEdge = 10;
-static const size_t kWeightFreeEdge    = 10;
+static const char* const kColorNullElem = "yellow";
+static const char* const kColorFree     = "green";
+static const char* const kColorNext     = "blue";
+static const char* const kColorPrev     = "red";
+static const size_t kWeightInvisEdge    = 100;
+static const size_t kWeightDefaultEdge  = 10;
+static const size_t kWeightFreeEdge     = 10;
 
 #define ERROR_HANDLER(result)                                   \
     if (result != kDoneList)                                    \

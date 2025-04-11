@@ -1,5 +1,7 @@
 build/
 
+.vscode/
+
 main_list.cpp
 
 My_lib/Logger/error.txt
@@ -7,3 +9,5 @@ My_lib/Logger/error.txt
 Dump_files/*
 
 list
+
+Makefile

@@ -4,15 +4,15 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "../My_lib/Assert/my_assert.h"
-#include "../My_lib/Logger/logging.h"
+#include "My_lib/Assert/my_assert.h"
+#include "My_lib/Logger/logging.h"
 
 enum ListError ListPopAfterIndex (list_t* const list, void* const element, size_t index)
 {
     ASSERT (list    != NULL, "Invalid argument list [%p] for pop of index\n", list);
     ASSERT (element != NULL, "Invalid argument element  [%p] for pop of index\n", element);
 
-    LOG (DEBUG,
+    LOG (kDebug,
                 "Pop of index of the list got argument:\n"
                 "| list = %p | element = %p | index = %lu |\n"
                 "| Next = %lu | Previous = %lu |\n",
@@ -24,6 +24,15 @@ enum ListError ListPopAfterIndex (list_t* const list, void* const element, size_
         return kCantPopList;
     }
 
+    if ((list->counter < list->size / 4) || (list->free == list->order [list->free].next))
+    {
+        enum ListError error = ListResize (list, false);
+        if (error != kDoneList)
+        {
+            return error;
+        }
+    }
+
     list->counter--;
 
     memcpy (element, (char*) list->data + index * list->elem_size, list->elem_size);
@@ -33,29 +42,26 @@ enum ListError ListPopAfterIndex (list_t* const list, void* const element, size_
 
     list->order [previous_elem_].next = next_elem_;
     list->order [next_elem_].previous = previous_elem_;
-
-    if (list->counter + 1 > index)
-    {
-        memcpy ((char*) list->data + index * list->elem_size,
-                (char*) list->data + (list->counter + 1) * list->elem_size,
-                list->elem_size);
-
-        list->order [index] = list->order [list->counter + 1];
-
-        list->order [list->order [index].previous].next = index;
-        list->order [list->order [index].next].previous = index;
-
-        index = list->counter + 1;
-    }
+//
+//     if (list->counter + 1 > index)
+//     {
+//         memcpy ((char*) list->data + index * list->elem_size,
+//                 (char*) list->data + (list->counter + 1) * list->elem_size,
+//                 list->elem_size);
+//
+//         list->order [index] = list->order [list->counter + 1];
+//
+//         list->order [list->order [index].previous].next = index;
+//         list->order [list->order [index].next].previous = index;
+//
+//         index = list->counter + 1;
+//     }
 
     memset ((char*) list->data + index * list->elem_size, 0, list->elem_size);
     list->order [index].next = list->free;
     list->order [index].previous = (size_t) -1;
 
     list->free = index;
-
-
-
 
     return kDoneList;
 }
@@ -65,7 +71,7 @@ enum ListError ListPopFront (list_t* const list, void* const element)
     ASSERT (list    != NULL, "Invalid argument list [%p] for pop front\n", list);
     ASSERT (element != NULL, "Invalid argument element  [%p] for pop front\n", element);
 
-    LOG (DEBUG,
+    LOG (kDebug,
                 "Pop front of the list got argument:\n"
                 "| list = %p | element = %p |\n"
                 "| Head = %lu | Tail = %lu |\n",
@@ -82,7 +88,7 @@ enum ListError ListPopBack (list_t* const list, void* const element)
     ASSERT (list    != NULL, "Invalid argument list [%p] for pop back\n", list);
     ASSERT (element != NULL, "Invalid argument element  [%p] for pop back\n", element);
 
-    LOG (DEBUG,
+    LOG (kDebug,
                 "Pop back of the list got argument:\n"
                 "| list = %p | element = %p |\n"
                 "| Head = %lu | Tail = %lu |\n",
