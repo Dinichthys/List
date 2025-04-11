@@ -5,9 +5,9 @@
 #include <string.h>
 #include <time.h>
 
-#include "My_lib/Assert/my_assert.h"
-#include "My_lib/Logger/logging.h"
-#include "My_lib/helpful.h"
+#include "../include/My_lib/Assert/my_assert.h"
+#include "../include/My_lib/Logger/logging.h"
+#include "../include/My_lib/helpful.h"
 
 const char* EnumToStr (const enum ListError error)
 {

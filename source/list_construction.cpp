@@ -4,9 +4,9 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "My_lib/Assert/my_assert.h"
-#include "My_lib/Logger/logging.h"
-#include "My_lib/helpful.h"
+#include "../include/My_lib/Assert/my_assert.h"
+#include "../include/My_lib/Logger/logging.h"
+#include "../include/My_lib/helpful.h"
 
 enum ListError ListCtor (list_t* const list, const size_t number_elem, const size_t elem_size)
 {
@@ -77,13 +77,13 @@ enum ListError ListResize (list_t* const list, const bool flag_more)
     ASSERT (list != NULL, "Invalid argument for list [%p] for destructor\n", list);
 
     const size_t new_size = (flag_more) ? list->size * kScaleList : list->size / kScaleList;
-    void* const new_data = calloc (new_size, list->elem_size);
+    void* const new_data = calloc (new_size + 1, list->elem_size);
     if (new_data == NULL)
     {
         return kCantResizeList;
     }
 
-    order_list_t* const new_order = (order_list_t*) calloc (new_size, sizeof (order_list_t));
+    order_list_t* const new_order = (order_list_t*) calloc (new_size + 1, sizeof (order_list_t));
     if (list->order == NULL)
     {
         FREE_AND_NULL (list->data);
@@ -95,14 +95,15 @@ enum ListError ListResize (list_t* const list, const bool flag_more)
 
     while (list_elem_index != 0)
     {
-        new_order [new_index] = list->order [list_elem_index];
+        new_order [new_index] = {.next = new_index + 1, .previous = new_index - 1};
         memcpy ((char*) new_data   + new_index       * list->elem_size,
                 (char*) list->data + list_elem_index * list->elem_size, list->elem_size);
+        list_elem_index = NextIndex (list, list_elem_index);
         new_index++;
     }
 
-    new_order [0].next = 1;
-    new_order [0].previous = list->counter;
+    new_order [0] = {.next = 1, .previous = list->counter};
+    new_order [new_index - 1].next = 0;
 
     for (size_t free_index = list->counter + 1; free_index < new_size; free_index++)
     {

@@ -4,8 +4,9 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "My_lib/Assert/my_assert.h"
-#include "My_lib/Logger/logging.h"
+#include "../include/My_lib/Assert/my_assert.h"
+#include "../include/My_lib/Logger/logging.h"
+#include "../include/My_lib/helpful.h"
 
 enum ListError ListPopAfterIndex (list_t* const list, void* const element, size_t index)
 {
