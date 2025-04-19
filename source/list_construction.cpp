@@ -3,6 +3,8 @@
 
 #include <stdlib.h>
 #include <string.h>
+#include <xmmintrin.h>
+#include <immintrin.h>
 
 #include "../include/My_lib/Assert/my_assert.h"
 #include "../include/My_lib/Logger/logging.h"
@@ -24,7 +26,7 @@ enum ListError ListCtor (list_t* const list, const size_t number_elem, const siz
 
     list->free = 1;
 
-    list->data = calloc (list->size + 1, list->elem_size);
+    list->data = aligned_alloc (sizeof (__m256), (number_elem + 1) * list->elem_size);
     if (list->data == NULL)
     {
         return kCantCtorList;
