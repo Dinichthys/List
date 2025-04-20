@@ -79,7 +79,7 @@ enum ListError ListResize (list_t* const list, const bool flag_more)
     ASSERT (list != NULL, "Invalid argument for list [%p] for destructor\n", list);
 
     const size_t new_size = (flag_more) ? list->size * kScaleList : list->size / kScaleList;
-    void* const new_data = calloc (new_size + 1, list->elem_size);
+    void* const new_data = aligned_alloc (sizeof (__m256), (new_size + 1) * list->elem_size);
     if (new_data == NULL)
     {
         return kCantResizeList;
