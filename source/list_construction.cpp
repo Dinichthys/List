@@ -20,13 +20,13 @@ enum ListError ListCtor (list_t* const list, const size_t number_elem, const siz
 
     list->counter = 0;
 
-    list->size = number_elem;
+    list->size = number_elem - (number_elem % sizeof (__m256)) + sizeof (__m256) - 1;
 
     list->elem_size = elem_size;
 
     list->free = 1;
 
-    list->data = aligned_alloc (sizeof (__m256), (number_elem + 1) * list->elem_size);
+    list->data = aligned_alloc (sizeof (__m256), (list->size + 1) * list->elem_size);
     if (list->data == NULL)
     {
         return kCantCtorList;
@@ -78,7 +78,10 @@ enum ListError ListResize (list_t* const list, const bool flag_more)
 {
     ASSERT (list != NULL, "Invalid argument for list [%p] for destructor\n", list);
 
-    const size_t new_size = (flag_more) ? list->size * kScaleList : list->size / kScaleList;
+    size_t new_size = (flag_more) ? list->size * kScaleList : list->size / kScaleList;
+
+    new_size = new_size - (new_size % sizeof (__m256)) + sizeof (__m256) - 1;
+
     void* const new_data = aligned_alloc (sizeof (__m256), (new_size + 1) * list->elem_size);
     if (new_data == NULL)
     {
