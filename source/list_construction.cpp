@@ -89,9 +89,9 @@ enum ListError ListResize (list_t* const list, const bool flag_more)
     }
 
     order_list_t* const new_order = (order_list_t*) calloc (new_size + 1, sizeof (order_list_t));
-    if (list->order == NULL)
+    if (new_order == NULL)
     {
-        FREE_AND_NULL (list->data);
+        free (new_data);
         return kCantResizeList;
     }
 
