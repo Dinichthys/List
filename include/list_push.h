@@ -1,4 +1,4 @@
-#ifndef LIST_PUSH_H
+#if !(defined(LIST_PUSH_H))
 #define LIST_PUSH_H
 
 #include "list.h"

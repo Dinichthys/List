@@ -1,5 +1,5 @@
-#ifndef LIST_H_
-#define LIST_H_
+#if !(defined(LIST_H))
+#define LIST_H
 
 #include <stdlib.h>
 
@@ -51,4 +51,4 @@ enum ListError
 #include "list_src.h"
 #include "list_error_handler.h"
 
-#endif // LIST_H_
+#endif // LIST_H

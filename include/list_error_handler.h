@@ -1,4 +1,4 @@
-#ifndef LIST_ERROR_HANDLER_H
+#if !(defined(LIST_ERROR_HANDLER))
 #define LIST_ERROR_HANDLER_H
 
 #include <stdio.h>

@@ -1,4 +1,4 @@
-#ifndef LIST_CONSTRUCTION_H
+#if !(defined(LIST_CONSTRUCTION_H))
 #define LIST_CONSTRUCTION_H
 
 #include "list.h"

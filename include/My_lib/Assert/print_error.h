@@ -1,4 +1,4 @@
-#ifndef PRINT_ERROR_H
+#if !(defined(PRINT_ERROR_H))
 #define PRINT_ERROR_H
 
 void print_err (FILE* stream, const char * format, ...);
