@@ -1,4 +1,4 @@
-#if !(defined(LIST_H))
+#ifndef LIST_H
 #define LIST_H
 
 #include <stdlib.h>
@@ -44,11 +44,5 @@ enum ListError
     kVerifyListInvalidOrderList = 10,
     kVerifyListInvalidOrderFree = 11,
 };
-
-#include "list_construction.h"
-#include "list_push.h"
-#include "list_pop.h"
-#include "list_src.h"
-#include "list_error_handler.h"
 
 #endif // LIST_H

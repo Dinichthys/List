@@ -1,4 +1,4 @@
-#if !(defined(LIST_POP_H))
+#ifndef LIST_POP_H
 #define LIST_POP_H
 
 #include "list.h"

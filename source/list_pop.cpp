@@ -1,12 +1,13 @@
 #include "../include/list_pop.h"
-#include "../include/list.h"
 
 #include <stdlib.h>
 #include <string.h>
 
+#include "../include/list.h"
+#include "../include/list_construction.h"
+
 #include "../include/My_lib/Assert/my_assert.h"
 #include "../include/My_lib/Logger/logging.h"
-#include "../include/My_lib/helpful.h"
 
 enum ListError ListPopAfterIndex (list_t* const list, void* const element, size_t index)
 {

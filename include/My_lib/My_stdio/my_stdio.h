@@ -1,12 +1,9 @@
-#if !(defined(MY_STDIO_H))
+#ifndef MY_STDIO_H
 #define MY_STDIO_H
 
 #include <stdio.h>
 #include <stddef.h>
 #include <stdlib.h>
-
-#include "../Logger/logging.h"
-#include "../Assert/my_assert.h"
 
 int    my_strcmp          (const char* const s1, const char* const s2);
 size_t skip_space_symbols (const char* const string);

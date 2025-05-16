@@ -1,4 +1,4 @@
-#if !(defined(LIST_SRC_H))
+#ifndef LIST_SRC_H
 #define LIST_SRC_H
 
 #include "list.h"

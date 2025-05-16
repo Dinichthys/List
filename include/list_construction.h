@@ -1,11 +1,9 @@
-#if !(defined(LIST_CONSTRUCTION_H))
+#ifndef LIST_CONSTRUCTION_H
 #define LIST_CONSTRUCTION_H
 
 #include "list.h"
 
 #include <stdlib.h>
-
-#include "My_lib/helpful.h"
 
 static const size_t kScaleList = 2;
 
