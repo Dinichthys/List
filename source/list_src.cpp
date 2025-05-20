@@ -5,7 +5,6 @@
 #include <memory.h>
 
 #include "../include/My_lib/Assert/my_assert.h"
-#include "../include/My_lib/Logger/logging.h"
 
 size_t NextIndex (const list_t* const list, const size_t index)
 {

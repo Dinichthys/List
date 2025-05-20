@@ -28,17 +28,23 @@ enum ListError ListCtor (list_t* const list, const size_t number_elem, const siz
 
     list->free = 1;
 
-    list->data = aligned_alloc (sizeof (__m256), (list->size + 1) * list->elem_size);
     if (list->data == NULL)
     {
-        return kCantCtorList;
+        list->data = aligned_alloc (sizeof (__m256), (list->size + 1) * list->elem_size);
+        if (list->data == NULL)
+        {
+            return kCantCtorList;
+        }
     }
 
-    list->order = (order_list_t*) calloc (list->size + 1, sizeof (order_list_t));
     if (list->order == NULL)
     {
-        FREE_AND_NULL (list->data);
-        return kCantCtorList;
+        list->order = (order_list_t*) calloc (list->size + 1, sizeof (order_list_t));
+        if (list->order == NULL)
+        {
+            FREE_AND_NULL (list->data);
+            return kCantCtorList;
+        }
     }
 
     memset (list->data, 0, list->elem_size * list->size);
